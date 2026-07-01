@@ -13,8 +13,8 @@ import tensorflow as tf
 
 # SETUP PATH & LOAD MODEL
 # pakai path lokal
-MODEL_PATH = 'xception_model.h5'
-FILE_ID = '1DOy2ToebtFzZW8fPgsyMW3zjzL78Ap_6' 
+MODEL_PATH = 'xception_model_latest.h5'
+FILE_ID = '10hSanytLFK0IlDiNOPZZ_39g5vjwjDcX' 
 LOG_PATH = 'xception_training_log_latest.csv'
 IMG_SIZE = 128
 
@@ -22,7 +22,7 @@ IMG_SIZE = 128
 def load_deeplearning_model():
     if not os.path.exists(MODEL_PATH):
         print("Model belum ada, mendownload dari Google Drive...")
-        url = f'https://drive.google.com/file/d/1DOy2ToebtFzZW8fPgsyMW3zjzL78Ap_6/view?usp=drive_link'
+        url = f'https://drive.google.com/file/d/10hSanytLFK0IlDiNOPZZ_39g5vjwjDcX/view?usp=drive_link'
         gdown.download(url, MODEL_PATH, quiet=False)
     
     try:
