@@ -28,18 +28,13 @@ def load_deeplearning_model():
             quiet=False
         )
 
-    print("Model exists:", os.path.exists(MODEL_PATH))
-    print("Model size:", os.path.getsize(MODEL_PATH))
+    st.write("Model exists:", os.path.exists(MODEL_PATH))
+    st.write("Model size:", os.path.getsize(MODEL_PATH))
 
-    # TAMBAHKAN DI SINI
     with open(MODEL_PATH, "rb") as f:
-        st.write("Model exists:", os.path.exists(MODEL_PATH))
-st.write("Model size:", os.path.getsize(MODEL_PATH))
+        header = f.read(32)
 
-with open(MODEL_PATH, "rb") as f:
-    header = f.read(32)
-
-st.write(header)
+    st.write("Header:", header)
 
     try:
         model = tf.keras.models.load_model(
@@ -51,7 +46,7 @@ st.write(header)
     except Exception as e:
         st.error(f"Gagal load model: {e}")
         return None
-
+        
 @st.cache_resource
 def load_face_detector():
     return MTCNN()
