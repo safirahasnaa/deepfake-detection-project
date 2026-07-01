@@ -20,26 +20,30 @@ IMG_SIZE = 128
 
 @st.cache_resource
 def load_deeplearning_model():
-    # hapus model lama jika ada
-if os.path.exists(MODEL_PATH):
-    os.remove(MODEL_PATH)
 
-# download model
-gdown.download(
-    f"https://drive.google.com/uc?id={FILE_ID}",
-    MODEL_PATH,
-    quiet=False
-)
-
-print("Model exists :", os.path.exists(MODEL_PATH))
-print("Model size :", os.path.getsize(MODEL_PATH))
-    try:
-        return tf.keras.models.load_model(
-    MODEL_PATH,
-    compile=False
+    if not os.path.exists(MODEL_PATH):
+        gdown.download(
+            f"https://drive.google.com/uc?id={FILE_ID}",
+            MODEL_PATH,
+            quiet=False
         )
+
+    print("Model exists:", os.path.exists(MODEL_PATH))
+    print("Model size:", os.path.getsize(MODEL_PATH))
+
+    # TAMBAHKAN DI SINI
+    with open(MODEL_PATH, "rb") as f:
+        print("Header:", f.read(8))
+
+    try:
+        model = tf.keras.models.load_model(
+            MODEL_PATH,
+            compile=False
+        )
+        return model
+
     except Exception as e:
-        print(f"Error load model: {e}")
+        st.error(f"Gagal load model: {e}")
         return None
 
 @st.cache_resource
