@@ -14,38 +14,33 @@ import tensorflow as tf
 # SETUP PATH & LOAD MODEL
 # pakai path lokal
 MODEL_PATH = "xception_best_model.h5"
-FILE_ID = "1P4EPsDO6k0I4CtpPgTs82a9zJnTDc9MT" 
-LOG_PATH = 'xception_training_log_latest.csv'
-IMG_SIZE = 128
+FILE_ID = "1P4EPsDO6k0I4CtpPgTs82a9zJnTDc9MT"
 
 @st.cache_resource
 def load_deeplearning_model():
 
-    if not os.path.exists(MODEL_PATH):
-        gdown.download(
-            f"https://drive.google.com/uc?id={FILE_ID}",
-            MODEL_PATH,
-            quiet=False
-        )
+    # kalau ada file LFS 134 byte, hapus dulu
+    if os.path.exists(MODEL_PATH):
+        if os.path.getsize(MODEL_PATH) < 1000000:
+            os.remove(MODEL_PATH)
 
-    st.write("Model exists:", os.path.exists(MODEL_PATH))
-    st.write("Model size:", os.path.getsize(MODEL_PATH))
+    # download model jika belum ada
+    if not os.path.exists(MODEL_PATH):
+        url = f"https://drive.google.com/uc?id={FILE_ID}"
+        gdown.download(url, MODEL_PATH, quiet=False)
+
+    print("Model exists:", os.path.exists(MODEL_PATH))
+    print("Model size:", os.path.getsize(MODEL_PATH))
 
     with open(MODEL_PATH, "rb") as f:
-        header = f.read(32)
+        print("Header:", f.read(8))
 
-    st.write("Header:", header)
+    model = tf.keras.models.load_model(
+        MODEL_PATH,
+        compile=False
+    )
 
-    try:
-        model = tf.keras.models.load_model(
-            MODEL_PATH,
-            compile=False
-        )
-        return model
-
-    except Exception as e:
-        st.error(f"Gagal load model: {e}")
-        return None
+    return model
         
 @st.cache_resource
 def load_face_detector():
