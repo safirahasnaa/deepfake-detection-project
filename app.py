@@ -15,6 +15,8 @@ import tensorflow as tf
 # pakai path lokal
 MODEL_PATH = "xception_best_model.h5"
 FILE_ID = "1P4EPsDO6k0I4CtpPgTs82a9zJnTDc9MT"
+LOG_PATH = "xception_training_log_latest.csv"
+IMG_SIZE = 128
 
 @st.cache_resource
 def load_deeplearning_model():
