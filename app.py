@@ -18,15 +18,15 @@ MODEL_ID = '10hSanytLFK0IlDiNOPZZ_39g5vjwjDcX'
 LOG_PATH = 'xception_training_log_latest.csv'
 IMG_SIZE = 128
 
-if not os.path.exists(MODEL_PATH):
-    gdown.download(
-        f"https://drive.google.com/file/d/10hSanytLFK0IlDiNOPZZ_39g5vjwjDcX/view?usp=drive_link",
-        MODEL_PATH,
-        quiet=False
-    )
+@st.cache_resource
+def load_deeplearning_model():
+    if not os.path.exists(MODEL_PATH):
+        print("Model belum ada, mendownload dari Google Drive...")
+        url = f'https://drive.google.com/uc?id={10hSanytLFK0IlDiNOPZZ_39g5vjwjDcX}'
+        gdown.download(url, MODEL_PATH, quiet=False)
     
     try:
-        return model = tf.keras.models.load_model(MODEL_PATH, compile=False)
+        return tf.keras.models.load_model(MODEL_PATH)
     except Exception as e:
         print(f"Error load model: {e}")
         return None
