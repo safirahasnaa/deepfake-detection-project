@@ -13,20 +13,25 @@ import tensorflow as tf
 
 # SETUP PATH & LOAD MODEL
 # pakai path lokal
-MODEL_PATH = 'xception_model_latest.h5'
-MODEL_ID = '10hSanytLFK0IlDiNOPZZ_39g5vjwjDcX' 
+MODEL_PATH = "xception_model_latest.h5"
+FILE_ID = "10hSanytLFK0IlDiNOPZZ_39g5vjwjDcX" 
 LOG_PATH = 'xception_training_log_latest.csv'
 IMG_SIZE = 128
 
 @st.cache_resource
 def load_deeplearning_model():
     if not os.path.exists(MODEL_PATH):
-        print("Model belum ada, mendownload dari Google Drive...")
-        url = f'https://drive.google.com/file/d/10hSanytLFK0IlDiNOPZZ_39g5vjwjDcX/view?usp=drive_link'
-        gdown.download(url, MODEL_PATH, quiet=False)
+    gdown.download(
+        f"https://drive.google.com/uc?id={FILE_ID}",
+        MODEL_PATH,
+        quiet=False
+    )
     
     try:
-        return tf.keras.models.load_model(MODEL_PATH)
+        return tf.keras.models.load_model(
+    MODEL_PATH,
+    compile=False
+        )
     except Exception as e:
         print(f"Error load model: {e}")
         return None
