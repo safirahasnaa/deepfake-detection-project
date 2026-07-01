@@ -22,7 +22,7 @@ IMG_SIZE = 128
 def load_deeplearning_model():
     if not os.path.exists(MODEL_PATH):
         print("Model belum ada, mendownload dari Google Drive...")
-        url = f'https://drive.google.com/uc?id={10hSanytLFK0IlDiNOPZZ_39g5vjwjDcX}'
+        url = f'https://drive.google.com/file/d/10hSanytLFK0IlDiNOPZZ_39g5vjwjDcX/view?usp=drive_link'
         gdown.download(url, MODEL_PATH, quiet=False)
     
     try:
