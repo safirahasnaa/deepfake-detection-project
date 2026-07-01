@@ -14,20 +14,23 @@ import tensorflow as tf
 # SETUP PATH & LOAD MODEL
 # pakai path lokal
 MODEL_PATH = "xception_best_model.h5"
-FILE_ID = "1Tu61DfNOVmvzvy23FX51dWO9-E_mNC_E" 
+FILE_ID = "1P4EPsDO6k0I4CtpPgTs82a9zJnTDc9MT" 
 LOG_PATH = 'xception_training_log_latest.csv'
 IMG_SIZE = 128
 
 @st.cache_resource
 def load_deeplearning_model():
-    if not os.path.exists(MODEL_PATH):
-        st.error("Model gagal di-download.")
-        return None
+    if os.path.exists(MODEL_PATH):
+    os.remove(MODEL_PATH)
 
-    return tf.keras.models.load_model(
-        MODEL_PATH,
-        compile=False
-    )
+gdown.download(
+    f"https://drive.google.com/uc?id={FILE_ID}",
+    MODEL_PATH,
+    quiet=False
+)
+
+print("Downloaded:", os.path.exists(MODEL_PATH))
+print("Size:", os.path.getsize(MODEL_PATH))
     
     try:
         return tf.keras.models.load_model(
