@@ -33,7 +33,13 @@ def load_deeplearning_model():
 
     # TAMBAHKAN DI SINI
     with open(MODEL_PATH, "rb") as f:
-        print("Header:", f.read(8))
+        st.write("Model exists:", os.path.exists(MODEL_PATH))
+st.write("Model size:", os.path.getsize(MODEL_PATH))
+
+with open(MODEL_PATH, "rb") as f:
+    header = f.read(32)
+
+st.write(header)
 
     try:
         model = tf.keras.models.load_model(
