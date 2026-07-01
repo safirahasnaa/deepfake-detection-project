@@ -6,3 +6,4 @@ Pillow
 matplotlib
 opencv-python-headless
 mtcnn
+gdown
